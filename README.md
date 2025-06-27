@@ -4,7 +4,7 @@ This is a JavaScript project that can play a CCB game, which is a well-known gam
 And this project of CCB game is also author's JavaScript class's homework. 
 
 In CCB game, there are two player called Alice and Bob.
-Alice commit a character which is known by both, but Bob don't know which character Bob commit.
+Alice commit a character which is known by both, but Bob don't know which character Alice commit.
 There are k rounds of interaction.In each round, Bob guess a character and tell Alice and Alice will tell Bob the difference between the character she commit and the character Bob guess.
 If Bob can guess the correct character in k round, then Bob wins.Otherwise, Alice wins.
 The Project will build a server who can plays the role of Alice, and Chanllenger can play the role of Bob.Then chanllenger can play the CCB game.
