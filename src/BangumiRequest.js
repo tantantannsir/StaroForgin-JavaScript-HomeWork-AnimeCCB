@@ -3,12 +3,12 @@ import axios from 'axios';
 const BGM_API = 'https://api.bgm.tv';
 const APP_ID = "bgm4111685b9a191e581";
 const USER_AGENT = "StaroFogin/my-private-project";
-const ACCESS_TOKEN = "uRdSP26fv4OSNsfKrZWUD5AiWwJl1p0l1erOCTMe";
+const ACCESS_TOKEN = "ZTCaiNBSkimA4ZueBHxI0rKOj9CvqPVZPxLdXs00";
 
 export async function searchCharacters(name){
-    console.log("Searching for character:",name);
+    //console.log("Searching for character:",name);
     try{
-        console.log("Before Search");
+        //console.log("Before Search");
         const response = await axios.post(
             'https://api.bgm.tv/v0/search/characters',
             {
@@ -24,7 +24,7 @@ export async function searchCharacters(name){
                 }
             }
         );
-        console.log("After Search:",response);
+        //console.log("After Search:",response);
         return response.data;
     }catch(error){
         console.error("Error fetching character data",error);
@@ -33,7 +33,7 @@ export async function searchCharacters(name){
 }
 
 export async function getCharacterById(characterId){
-    console.log("Fetching character by ID:",characterId);
+    //console.log("Fetching character by ID:",characterId);
     try {
         const response = await axios.get(`https://api.bgm.tv/v0/characters/${characterId}`,{
             headers: {

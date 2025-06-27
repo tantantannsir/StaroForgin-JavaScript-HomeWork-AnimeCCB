@@ -26,23 +26,27 @@ function GaussingCharacter(){
     const dropdownRef = useRef(null);
     const [isGenerated, setIsGenerated] = useState({origin: {}, flag: false});
     const [openDialog, setOpenDialog] = useState(0);
-
-    const handleCorrectGuess = () => {
-        setOpenDialog(1); // 猜对时打开弹窗
-    };
     
+    // 猜对时打开弹窗
+    const handleCorrectGuess = () => {
+        setOpenDialog(1); 
+    };
+
+    // 投降时打开弹窗
     const handleFailureGuess = () => {
         setOpenDialog(2);
     };
 
+    // 关闭弹窗
     const handleClose = () => {
-        setOpenDialog(0); // 关闭弹窗
+        setOpenDialog(0);
     };
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    // 生成随机角色
     const sampleRandomCharacters = async () => {
         let randomNumber = 0;
         while(true){
@@ -58,19 +62,21 @@ function GaussingCharacter(){
         }
     };
 
+    // 点击开始后开始sample
     const handleStart = () => {
         sampleRandomCharacters().then((response) => {
-            console.log("生成随机角色: ",response);
+            //console.log("生成随机角色: ",response);
             setIsGenerated({origin: response, flag: true});
         });
     }
 
+    // 查看有无简中名
     const findChineseName = (infobox) => {
         const res = infobox.find(item => item.key === "简体中文名");
         return res?.value;
     }
 
-    // 搜索函数
+    // 搜索相关角色
     const handleSearch = () => {
         if (!inputTerm.trim()) {
             setResults({value: [], completed: true});
@@ -83,18 +89,19 @@ function GaussingCharacter(){
             
         searchCharacters(inputTerm)
         .then(response => {
-            setResults({value: response.data, completed: true}); // 标记搜索已完成
+            setResults({value: response.data, completed: true});
             //console.log('搜索结果：',response,results.value,results.completed,typeof results.value,results.value.length);
         })
         .catch(error => {
             console.error('搜索失败:', error);
-            setResults({value: [], completd: true}); // 即使出错也标记完成
+            setResults({value: [], completd: true});
         })
         .finally(() => {
             setIsLoading(false);
         });
     };
     
+    // 选定角色后搜索相关作品，检查答案正确与否
     const handleClick = (item) => {
         if(item.id == isGenerated.origin.person.id)
             handleCorrectGuess();
@@ -109,6 +116,7 @@ function GaussingCharacter(){
         });
     }
     
+    // 标签处理
     const tagCells = (tags) => {
         if (tags == null) return null;
         
@@ -138,7 +146,8 @@ function GaussingCharacter(){
             </Box>
         );
     }
-
+    
+    // 更换颜色
     const checkTagColor = (name) => {
         if(isGenerated.origin == null || isGenerated.origin.related.tags == null) return false;
         console.log("tags: ",name,isGenerated.origin.related.tags);
@@ -269,6 +278,7 @@ function GaussingCharacter(){
         );
     }
 
+    // 开始页面
     if (!isGenerated.flag) {
         return (
         <div className="App">
@@ -282,9 +292,12 @@ function GaussingCharacter(){
         );
     }
 
+    // 游戏页面
     return (
         <div className="App">
             <h1> 猜猜呗</h1>
+
+            {/* 弹窗 */}
             <div>
                 <Dialog open={openDialog} onClose={handleClose} maxWidth="sm" fullWidth>
                     <DialogTitle sx={{ textAlign: 'center', fontSize: '1.5rem', color: 'success.main'}}>
@@ -336,13 +349,13 @@ function GaussingCharacter(){
                         {isLoading ? '搜索中...' : '搜索'}
                     </button>
                 </div>
-
-                {/* 下拉框 - 根据状态精确控制显示内容 */}
+                
+                {/* 下拉搜索框 */}
                 {isOpen && isGenerated && (
                     <div className={styles.largeSearchArea}>
                     {isLoading ? (
                         <div className={styles.dropdownItem}>加载中...</div>
-                    ) : results.completed ? ( // 只有搜索完成后再判断结果
+                    ) : results.completed ? (
                         (typeof results.value == typeof [] && results.value.length > 0) ? (
                         results.value.map(item => (
                             <div
@@ -388,6 +401,8 @@ function GaussingCharacter(){
                 剩余次数:{10-history.value.length}
             </div>
             <br></br>
+
+            {/* 历史记录 */}
             <div>
                 <TableContainer component={Paper}>
                     <Table size="small">
