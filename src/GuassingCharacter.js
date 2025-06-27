@@ -150,7 +150,7 @@ function GaussingCharacter(){
     // 更换颜色
     const checkTagColor = (name) => {
         if(isGenerated.origin == null || isGenerated.origin.related.tags == null) return false;
-        console.log("tags: ",name,isGenerated.origin.related.tags);
+        //console.log("tags: ",name,isGenerated.origin.related.tags);
         for(let item of isGenerated.origin.related.tags)
             if(item.name == name)
                 return true;
@@ -158,7 +158,7 @@ function GaussingCharacter(){
     }
 
     const TagBox = ({name}) => {
-        console.log("TagBox :",name,isGenerated);
+        //console.log("TagBox :",name,isGenerated);
         return (
             <Box sx={{
                 border: '1px solid #ccc',
